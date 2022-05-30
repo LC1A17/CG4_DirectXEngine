@@ -1,0 +1,8 @@
+# MagicaVoxel @ Ephtracy
+
+newmtl palette
+illum 1
+Ka 0.300 0.300 0.300
+Kd 1.000 1.000 1.000
+Ks 0.300 0.300 0.300
+map_Kd player.png
