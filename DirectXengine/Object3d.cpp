@@ -82,6 +82,10 @@ void Object3d::Update()
 	//ボーン配列
 	std::vector<Model::Bone>& bones = model->GetBones();
 
+	//定数バッファへデータ転送
+	ConstBufferDataSkin* constMapSkin = nullptr;
+	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
+
 	//アニメーション
 	if (isPlay)
 	{
@@ -95,10 +99,6 @@ void Object3d::Update()
 		}
 	}
 
-	//定数バッファへデータ転送
-	ConstBufferDataSkin* constMapSkin = nullptr;
-	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
-
 	for (int i = 0; i < bones.size(); i++)
 	{
 		//今の姿勢行列
@@ -110,7 +110,6 @@ void Object3d::Update()
 		//合成してスキニング行列に
 		constMapSkin->bones[i] = bones[i].invInitialPose * matCurrentPose;
 	}
-
 	constBuffSkin->Unmap(0, nullptr);
 }
 

@@ -95,14 +95,15 @@ void GameScene::Initialize(DxInit* dxInit, Input* input, Sound* sound)
 	lightGroup = LightGroup::Create();
 
 	//カメラ注視点をセット
-	camera->SetTarget({ 0, 20, 0 });
-	camera->SetDistance(100.0f);
+	camera->SetTarget({ 0, 2.5f, 0 });
+	camera->SetDistance(8.0f);
+	object->SetRotation({ 0, 90, 0 });
+	object->PlayAnimation();
 }
 
 //更新処理
 void GameScene::Update()
 {
-	object->PlayAnimation();
 	object->Update();//オブジェクト更新
 	lightGroup->Update();//ライト更新
 	camera->Update();//カメラ更新
