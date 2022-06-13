@@ -3,6 +3,7 @@
 #include "Sound.h"
 #include "GameScene.h"
 #include "LightGroup.h"
+#include "PostEffect.h"
 #include "ParticleManager.h"
 //#include "fbxsdk.h"
 #include "FbxLoader.h"
@@ -16,6 +17,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Input* input = nullptr;
 	Sound* sound = nullptr;
 	GameScene* gameScene = nullptr;
+	PostEffect* postEffect = nullptr;
 
 	//ゲームウィンドウの作成
 	win = new WinInit();
@@ -35,6 +37,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	LightGroup::StaticInitialize(dxInit->GetDev());
 	//パーティクルマネージャ初期化
 	ParticleManager::GetInstance()->Initialize(dxInit->GetDev());
+	//ポストエフェクト用テクスチャの読み込み
+	//Sprite::LoadTexture(100, L"Resources/white1x1.png");
+	//ポストエフェクトの初期化
+	postEffect = new PostEffect();
+	postEffect->Initialize();
 	//FBX
 	FbxLoader::GetInstance()->Initialize(dxInit->GetDev());
 	//GameScene
@@ -55,9 +62,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		gameScene->Update();//GameScene更新
 		//更新処理ここまで
 
+		//レンダーテクスチャへの描画
+		postEffect->PreDrawScene(dxInit->GetCmdList());
+		gameScene->Draw();
+		postEffect->PostDrawScene(dxInit->GetCmdList());
+
 		//描画処理ここから
 		dxInit->BeforeDraw();//描画開始
-		gameScene->Draw();//GameScene描画
+		postEffect->Draw(dxInit->GetCmdList());//ポストエフェクトの描画
+		//gameScene->Draw();//GameScene描画
 		dxInit->AfterDraw();//描画終了
 		//描画処理ここまで
 
@@ -72,6 +85,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	delete(gameScene);
 	delete(sound);
 	delete(dxInit);
+	delete(postEffect);
 	FbxLoader::GetInstance()->Finalize();
 
 	//ウィンドウの破棄

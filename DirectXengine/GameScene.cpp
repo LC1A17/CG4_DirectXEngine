@@ -116,11 +116,13 @@ void GameScene::Draw()
 	//コマンドリストの取得
 	ID3D12GraphicsCommandList* cmdList = dxInit->GetCmdList();
 
+	/*
 	Sprite::PreDraw(cmdList);//スプライト描画前処理
 	//ここに追加
 	back->Draw();//背景
 	Sprite::PostDraw();//スプライト描画後処理
 	dxInit->ClearDepthBuffer();//深度バッファクリア
+	*/
 
 	object->Draw(cmdList);
 	//パーティクルの描画
