@@ -4,6 +4,7 @@
 #include <DirectXMath.h>
 #include "Input.h"
 #include "Sprite.h"
+#include "Object.h"
 #include "Object3d.h"
 #include "ParticleManager.h"
 #include "DebugText.h"
@@ -54,6 +55,8 @@ private://ƒƒ“ƒo•Ï”
 	Sound* sound = nullptr;
 	DebugText* debugText;
 
+	Model3d* model3d = nullptr;
+	Object* obj = nullptr;
 	Model* model = nullptr;
 	Object3d* object = nullptr;
 	DebugCamera* camera = nullptr;

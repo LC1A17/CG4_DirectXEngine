@@ -33,6 +33,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sound->Initialize();
 	//スプライト初期化処理
 	Sprite::StaticInitialize(dxInit->GetDev(), WinInit::WIN_WIDTH, WinInit::WIN_HEIGHT);
+	//3Dオブジェクト
+	Object::StaticInitialize(dxInit->GetDev(), WinInit::WIN_WIDTH, WinInit::WIN_HEIGHT);
 	//ライト静的初期化
 	LightGroup::StaticInitialize(dxInit->GetDev());
 	//パーティクルマネージャ初期化

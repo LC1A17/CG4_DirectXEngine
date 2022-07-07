@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "Model.h"
+#include "Model3d.h"
 #include "Collision.h"
 #include "FbxLoader.h"
 
@@ -76,6 +77,14 @@ void GameScene::Initialize(DxInit* dxInit, Input* input, Sound* sound)
 	back->SetSize({ 1280, 720 });
 	back->SetPosition({ 0.0f, 0.0f });
 
+	//モデル読み込み、生成
+	//モデル1
+	model3d = model3d->CreateFromOBJ("player");
+	obj = Object::Create();
+	obj->SetModel(model3d);
+	obj->SetPosition({ 0, 0, 0 });
+	obj->SetScale({ 2, 2, 2 });
+
 	//モデル名を指定してファイル読み込み
 	model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -104,6 +113,7 @@ void GameScene::Initialize(DxInit* dxInit, Input* input, Sound* sound)
 //更新処理
 void GameScene::Update()
 {
+	obj->Update();
 	object->Update();//オブジェクト更新
 	lightGroup->Update();//ライト更新
 	camera->Update();//カメラ更新
@@ -123,6 +133,10 @@ void GameScene::Draw()
 	Sprite::PostDraw();//スプライト描画後処理
 	dxInit->ClearDepthBuffer();//深度バッファクリア
 	*/
+
+	Object::PreDraw(cmdList);//3Dオブジェクト描画前処理
+	obj->Draw();
+	Object::PostDraw();//3Dオブジェクト描画後処理
 
 	object->Draw(cmdList);
 	//パーティクルの描画
